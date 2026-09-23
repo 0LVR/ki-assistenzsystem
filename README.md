@@ -200,4 +200,6 @@ Die Beispiele sind aus dem laufenden System übernommen und von persönlichen Da
 ---
 
 **Oliver Klimek** · Hamburg · KI-Enablement, Prozessautomatisierung, Tool-Integration
+
+Lizenz: [CC BY 4.0](LICENSE). Nutzen und Anpassen erlaubt, mit Namensnennung „Oliver Klimek“ und Link auf dieses Repo.
 [linkedin.com/in/0l1v3r](https://www.linkedin.com/in/0l1v3r)
