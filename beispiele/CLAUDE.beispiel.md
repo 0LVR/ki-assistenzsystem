@@ -7,7 +7,7 @@
 ## Was dieses Repo ist
 
 Ein persönliches Assistenzsystem aus Prompts, Datendateien und Arbeitsergebnissen
-für [Anwendungsbereiche, z. B. Jobsuche, Privatverkäufe, Postfach]. Kein Code.
+für [Anwendungsbereiche, z. B. Jobsuche und Postfach]. Kein Code.
 
 ## Ton
 
