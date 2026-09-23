@@ -40,6 +40,15 @@ Drei Regeln halten das System sauber:
 2. **Prompts enthalten keine Fakten.** Ein Prompt sagt, was zu tun ist und wie das Ergebnis aussieht. Was wahr ist, steht in den Datendateien.
 3. **Jeder Prompt hat einen Output-Vertrag.** Dateiname, Ablageort, Höchstlänge, und welche anderen Dateien danach nachgezogen werden. So entsteht kein Ergebnis, das nur im Chatverlauf existiert.
 
+> **Beispiel: der Output-Vertrag der Stellenbewertung**
+>
+> - **Datei:** `evaluation-output/2026-09-22_beispielfirma_ai-consultant_eval.md`
+> - **Länge:** höchstens 300 Wörter
+> - **Inhalt:** Ampel mit einem Satz Begründung, je eine Zeile pro Muss-Kriterium, erfüllte Soll-Kriterien, ATS-Keywords aus der Anzeige, offene Fragen
+> - **Danach:** Bei Gelb wandert die Stelle mit Wiedervorlagedatum auf die Watchlist, und die Statusdatei wird nachgezogen.
+>
+> Wie ein Pflichtenheft, nur für die Ausgabe der KI. Der nächste Schritt kann sich darauf verlassen: Die Keywords aus dieser Datei sind der Input für den Faktencheck der Unterlagen.
+
 Das Framework ist herstellerunabhängig. Es funktioniert mit Claude Code, lässt sich auf Cursor oder Windsurf übertragen und taugt auch als Kontext für API-Aufrufe. Ein Beispiel für den Projektanker liegt in [`beispiele/CLAUDE.beispiel.md`](beispiele/CLAUDE.beispiel.md).
 
 ### Vertrag statt Choreografie
