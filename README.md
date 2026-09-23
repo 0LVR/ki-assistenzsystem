@@ -52,7 +52,7 @@ Heute beschreibt jeder Prompt nur noch drei Dinge: das Ziel, die harten Regeln u
 
 ## 3. Das Agenten-System für die Jobsuche
 
-Die Jobsuche ist ein guter Testfall: viele Daten, harte Kriterien, echte Konsequenzen. Das System führt eine Stelle vom Fund bis zur fertigen Bewerbungsmappe.
+Die Jobsuche ist ein guter Testfall: viele Daten, harte Kriterien, echte Konsequenzen. Das System führt eine Stelle vom Fund bis zu einer belastbaren Entscheidung: bewerben, klären oder verwerfen.
 
 ```mermaid
 flowchart LR
@@ -62,8 +62,8 @@ flowchart LR
     W -->|Antwort| B
     B -->|grün| C[Arbeitgeber-Prüfung<br/>7 Dimensionen]
     C -->|K.O.| X
-    C -->|bestanden| D[Bewerbungsmappe<br/>CV, Anschreiben]
-    D --> E{Mensch prüft<br/>und versendet}
+    C -->|bestanden| D[Faktencheck<br/>Unterlagen gegen Anzeige]
+    D --> E{Mensch schreibt,<br/>entscheidet, versendet}
 ```
 
 ### Die Bausteine
@@ -76,11 +76,11 @@ flowchart LR
 
 **Recherche und Analyse.** Zwei getrennte Agenten, bewusst. Der Recherche-Agent sammelt Fakten und interpretiert nichts. Der Analyse-Agent zieht Schlüsse, bildet konkurrierende Hypothesen und greift die eigene Hauptaussage im Red Teaming an. Die Trennung verhindert, dass eine Vermutung unterwegs zur Tatsache wird. Prompts: [`recherche.md`](beispiele/prompts/recherche.md), [`analyse.md`](beispiele/prompts/analyse.md).
 
-**Bewerbungsmappe.** Lebenslauf und Anschreiben werden je Stelle aus einer Master-Datei zugeschnitten. Die wichtigste Regel dort: Nichts erfinden. Jede Aussage muss in der Master-Datei belegt sein. Was die Anzeige fordert und nicht belegt ist, landet als Lücke in einer Notiz, nicht im Lebenslauf.
+**Faktencheck der Unterlagen.** Formulierung und Entscheidung bleiben bei mir. Das System gleicht meine Unterlagen gegen die Anzeige und gegen eine Master-Datei mit meinen Belegen ab: Welche Anforderungen sind gedeckt, welche Begriffe der Anzeige fehlen, welche Aussage ist nicht belegt? Die Regel dabei: Nichts behaupten, was nicht belegt ist. Was die Anzeige fordert und mir fehlt, landet als Lücke in einer Notiz, damit ich sie im Gespräch ehrlich beantworten kann.
 
 ### Übergaben über Dateien
 
-Die Agenten sprechen nicht miteinander. Sie lesen und schreiben Dateien. Die Bewertung liest die Stellenanzeige und schreibt einen Bericht. Die Arbeitgeber-Prüfung liest den Bericht. Die Bewerbungsmappe liest beides.
+Die Agenten sprechen nicht miteinander. Sie lesen und schreiben Dateien. Die Bewertung liest die Stellenanzeige und schreibt einen Bericht. Die Arbeitgeber-Prüfung liest den Bericht. Der Faktencheck liest beides.
 
 Das klingt primitiv und ist der größte Vorteil des Systems. Jede Übergabe ist nachvollziehbar, jedes Zwischenergebnis prüfbar, und ein Fehler lässt sich auf den Schritt zurückverfolgen, in dem er entstanden ist.
 
@@ -119,7 +119,7 @@ Der Ablauf dahinter: lernen, validieren, freigeben. Erst verstehen, was da ist. 
 
 ### Jobsuche
 
-- **Die KI versendet nichts.** Sie schreibt Entwürfe. Absenden, hochladen und Konten anlegen macht der Mensch.
+- **Die KI versendet nichts.** Sie recherchiert, bewertet und prüft. Entscheiden, formulieren, absenden und Konten anlegen macht der Mensch.
 - **Captchas und Logins löst der Mensch.** Die Recherche hält an, meldet die Stelle und macht danach weiter, statt abzubrechen oder sich eine Antwort zusammenzureimen.
 - **Nicht belegte Behauptungen fliegen raus.** Auch wenn sie gut klingen. Die Notiz zum Lebenslauf führt jede Lücke offen auf, damit sie im Gespräch vorbereitet werden kann.
 - **Versandfertig ist nicht versendet.** Der Tracker unterscheidet beides ausdrücklich. Das kam aus einem echten Fehler: Eine fertige Dankesmail lag gut zwei Wochen ungesendet im System.
@@ -140,9 +140,9 @@ Drei Beispiele, wo die Struktur den Unterschied gemacht hat:
 
 **Die Klärungsmail als Filter.** Unklare Stellen bekommen eine kurze Mail mit zwei Fragen, meist Präsenztage und Gehaltsspanne. Von den an einem Abend versandten Mails kamen binnen 24 Stunden drei inhaltliche Antworten. Eine davon machte klar: 100 % Präsenz an einem Ort weit außerhalb meiner Region. Stelle aussortiert, ohne dass ein Lebenslauf geschrieben wurde.
 
-**Die Lücke, die keine war.** In einem Lebenslauf standen zwei Automatisierungswerkzeuge zunächst als „nicht belegt“. Im Gespräch mit dem System stellte sich heraus, dass ich eines davon in einem echten Projekt eingesetzt hatte. Weil jede Aussage auf die Master-Datei zurückgeht, wurde der Beleg dort nachgetragen und floss danach in alle weiteren Bewerbungen, sauber als Projekterfahrung und nicht als Dauerpraxis.
+**Die Lücke, die keine war.** Beim Abgleich mit einer Anzeige standen zwei Automatisierungswerkzeuge zunächst als „nicht belegt“. Mir fiel auf, dass ich eines davon in einem echten Projekt eingesetzt hatte, es aber nie dokumentiert war. Weil jede Aussage auf die Master-Datei zurückgeht, wurde der Beleg dort nachgetragen und floss danach in alle weiteren Bewerbungen, sauber als Projekterfahrung und nicht als Dauerpraxis.
 
-**Der Satz, der zu weit ging.** Ein Anschreiben behauptete, alle meine Projekte hätten Freigabeschritte vor jeder Aktion. Das stimmte nur für eines. Die Prüfung gegen die Belege fing es vor dem Versand ab.
+**Gute Bewertungen, dünne Zahlen.** Ein Arbeitgeber glänzte auf den Bewertungsportalen. Die Pflichtquelle Jahresabschluss zeigte dagegen Verluste und eine niedrige Eigenkapitalquote. Kein K.O., aber die Gehaltsfrage rückte dadurch im Erstgespräch nach vorn. Ohne feste Pflichtquellen wäre nur das freundliche Bild geblieben.
 
 ---
 

@@ -37,7 +37,7 @@ neue Regel kommt in die eine Datei, der sie gehört, nie in drei.
 
 - `job-research/` — Stellen finden, bewerten, Arbeitgeber prüfen. Regeln:
   `job-research/CLAUDE.md`
-- `job-application/` — Bewerbungsmappen, Tracker, Wiedervorlagen. Regeln:
+- `job-application/` — Faktencheck der Unterlagen, Tracker, Wiedervorlagen. Regeln:
   `job-application/CLAUDE.md`
 - `[weiteres-modul]/` — [Zweck]
 

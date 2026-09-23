@@ -29,7 +29,7 @@ Datei. Danach die Ablage nachziehen.
    Seniorität realistisch? Welche Lücken aus roles.md fordert die Anzeige explizit?
 5. ATS-Keywords: 5–10 Pflicht- und bis zu 5 Bonus-Keywords aus dem Anzeigentext,
    je mit ✅/⚠️/❌ gegen das Profil. Diese Liste ist Pflichtinput für
-   /cv-tailoring.
+   den Faktencheck der Unterlagen.
 6. Ampel nach Urteil, nicht nach Formel. 🟢 nur, wenn alle M ✅, Soll ≥ 4/7 und
    Rollen-Match mindestens mittel. Die Keyword-Quote zeigt den CV-Aufwand an,
    sie ist kein Ampelkriterium.
