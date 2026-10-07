@@ -137,13 +137,13 @@ Der Ablauf dahinter: lernen, validieren, freigeben. Erst verstehen, was da ist. 
 
 ## 5. Ergebnis
 
-Stand September 2026, nach rund drei Monaten Betrieb:
+Stand Oktober 2026, nach gut drei Monaten Betrieb:
 
-- **83** Stellen erfasst, **81** bewertet
-- **18** davon über die K.O.-Kriterien aussortiert, bevor Zeit hineinfloss
-- **45** auf der Watchlist mit konkreter offener Frage und Wiedervorlagedatum
-- **7** Arbeitgeber-Prüfungen mit Rohdaten und Bericht
-- **7** Bewerbungen, jede mit eigenem Lebenslauf, eigenem Anschreiben und dokumentierten Portal-Antworten
+- **146** Stellen erfasst, **144** bewertet
+- **33** davon über die K.O.-Kriterien aussortiert, bevor Zeit hineinfloss
+- **46** auf der Watchlist mit Empfehlung und Wiedervorlagedatum
+- **31** Arbeitgeber-Prüfungen mit Rohdaten und Bericht
+- **22** Bewerbungen, jede mit eigenem Lebenslauf, eigenem Anschreiben und dokumentierten Portal-Antworten
 
 Drei Beispiele, wo die Struktur den Unterschied gemacht hat:
 
@@ -155,7 +155,71 @@ Drei Beispiele, wo die Struktur den Unterschied gemacht hat:
 
 ---
 
-## 6. Learnings
+## 6. Funktioniert es? Gemessen, nicht behauptet
+
+Eine Demo zeigt, dass ein System läuft. Ob es richtig liegt, zeigt sie nicht. Deshalb hier die Zahlen, auch die unbequemen. Stand 7. Oktober 2026, 144 Stellenbewertungen seit Juli.
+
+### Die Ampel sagt meistens: unklar
+
+| Ampel | Anzahl | Anteil |
+|---|---|---|
+| Gelb | 108 | 75 % |
+| Rot | 33 | 23 % |
+| Grün | 2 | 1 % |
+
+Sieht nach einem schwachen Modell aus. Es ist eine Entscheidung.
+
+Meine wichtigsten Muss-Kriterien sind Präsenztage und Gehalt. Beides steht in kaum einer Anzeige. Ein System, das es trotzdem beantwortet, rät. Lieber Gelb mit einer konkreten Frage als Grün mit einer erfundenen Antwort.
+
+**Die Abwägung:** Eine Klärungsmail zu viel kostet zehn Minuten. Eine verpasste passende Stelle kostet mehr. Also ist Gelb bewusst großzügig.
+
+**Der Preis:** Gelb ist kein Filter mehr, sondern eine Arbeitsliste. Deshalb trägt jede gelbe Stelle eine Empfehlung und ein Wiedervorlagedatum. Von 46 Stellen auf der Watchlist: 3 bewerben, 21 beobachten, 8 geparkt, 14 entscheide ich.
+
+### Wenn ich die Empfehlung überstimme
+
+Eine Stelle stand auf Gelb, weil zwei Pflichtanforderungen in meinen Unterlagen nicht belegt waren. Ich habe mich trotzdem beworben. Absage nach vier Tagen, mit genau diesem Grund.
+
+Das System lag richtig. Ich habe es überstimmt, und das war in Ordnung, denn die Entscheidung gehört mir. Aber jetzt weiß ich: Eine nicht belegte Pflichtanforderung ist praktisch ein K.O., auch wenn die Anzeige freundlich klingt.
+
+Ändert sich eine Regel, werden die betroffenen Bewertungen neu gerechnet. Die alte Bewertung bleibt als Nachtrag stehen. So sieht man, ob sich das Ergebnis wegen der Stelle geändert hat oder wegen meiner Regel.
+
+### Postfach-Triage: Fehler als Rohstoff
+
+Jede falsche Einordnung markiere ich. Jeder nächtliche Lauf liest diese Markierungen zuerst und meldet, welche Regel versagt hat.
+
+Ausgewertet habe ich alle Laufprotokolle vom 13. Juli bis 7. Oktober:
+
+| Messgröße | Wert |
+|---|---|
+| Neu einsortierte Threads | 1.001 |
+| Von mir korrigiert | 4 (0,4 %) |
+| Vom System selbst als „manuell prüfen“ markiert | 39 (3,9 %) |
+| Vom System selbst als Fehler erkannt und behoben | 3 |
+
+Das Verhältnis ist mir wichtiger als die niedrige Fehlerquote. Das System hat zehnmal öfter gefragt, als es falsch lag. Genau so soll es sein.
+
+**Was die Fehler zeigen:** Bei zwei meiner vier Korrekturen gab es die richtige Regel schon, sie wurde aber nicht angewendet. Einmal widersprachen sich zwei Regeln. Beim vierten Fall ist der Grund nicht dokumentiert. Eine Regel aufzuschreiben heißt also noch nicht, dass sie greift. Prüfen lässt sich das nur an echten Fällen.
+
+**Der Fehler, der mich am meisten gelehrt hat:** Ende September lief der nächtliche Job mit einer veralteten Fassung seines Regelwerks. Das widerspricht meinem eigenen Grundsatz „eine Regel lebt in genau einer Datei“. Der geplante Job liest aber keine Dateien. Er braucht eine Kopie, und die war nicht nachgezogen. Aufgefallen ist es bei einem manuellen Lauf, in dem das System drei eigene Fehlgriffe fand und die Ursache benannte. Inzwischen liest der Job sein Regelwerk direkt aus der Datei. Die Kopie gibt es nicht mehr. Außerdem nennt jeder Lauf am Ende den Regelstand, mit dem er gearbeitet hat, und schreibt seine Zählung in eine Logdatei.
+
+**Was sonst schiefging:** Die ersten drei Korrekturen wurden in 25 Läufen gemeldet. Die Markierung blieb wochenlang stehen, weil niemand den Fall abgeschlossen hat. Ein Lernsignal braucht einen Endpunkt, sonst wird es zu Rauschen. Außerdem wurde die Markierung einmal für eine Umstellung von 28 Threads benutzt, die gar keine Fehler waren. Ein Messinstrument, das man für etwas anderes benutzt, misst danach nichts mehr.
+
+**Was die Zahl nicht sagt:** Sie zählt nur Fehler, die mir aufgefallen sind. Außerdem fehlen Protokolle für fünf Tage im September. In diese Lücke fällt ein größerer Schwung von 13 Korrekturen, aus denen in einer Sitzung 10 Regeländerungen wurden. Er steht hier gesondert, weil mir für diese Tage der Nenner fehlt.
+
+### Was ich bewusst nicht als Erfolg zähle
+
+Einladungen und Absagen messen nicht das System. Ob eine Firma einlädt, hängt an Lebenslauf, Markt und Timing. Das System beantwortet eine engere Frage: Stimmt die Grundlage, auf der ich entscheide? Für den Lebenslauf selbst läuft seit Oktober ein Vergleich zweier Varianten. Ergebnisse gibt es, wenn die Zahl der Fälle etwas aussagt.
+
+### Was ich vor dem Einsatz in einem Team ändern würde
+
+- **Festes Testset.** 30 bereits entschiedene Stellen als Referenz, nach jeder Regeländerung neu bewerten, Abweichungen zählen. Heute prüfe ich Regeländerungen nur an neuen Fällen.
+- **Nenner ab Tag eins.** Die Zahlen oben habe ich aus den Laufprotokollen von Hand ausgezählt. Seit Oktober schreibt jeder Lauf eine feste Zählzeile in eine Logdatei. Im Team gehört das von Anfang an dazu.
+- **Kosten pro Lauf.** Messe ich bisher nicht. Für ein Team mit 50 Leuten ist das die erste Frage der Geschäftsführung.
+- **Datenschutz.** Postfachinhalte laufen über einen externen Dienst. Im Unternehmen heißt das: Auftragsverarbeitungsvertrag, Datenklassen festlegen, und manche Postfächer bleiben draußen.
+
+---
+
+## 7. Learnings
 
 **Struktur schlägt Prompt-Länge.** Die größten Verbesserungen kamen nicht aus besseren Formulierungen, sondern daraus, Regeln an einen Ort zu verschieben und Fakten aus den Prompts herauszunehmen.
 
@@ -167,7 +231,7 @@ Drei Beispiele, wo die Struktur den Unterschied gemacht hat:
 
 ---
 
-## 7. Was ein Fachbereich davon übernehmen kann
+## 8. Was ein Fachbereich davon übernehmen kann
 
 Die Jobsuche ist nur der Anwendungsfall. Das Muster passt auf viele Prozesse in Unternehmen: Anfragen vorsortieren, Lieferanten prüfen, Dokumente gegen Regeln abgleichen.
 
