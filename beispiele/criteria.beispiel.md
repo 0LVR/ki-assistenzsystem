@@ -10,25 +10,24 @@
 
 | # | Kriterium | Beschreibung |
 |---|---|---|
-| M1 | **Arbeitsort / Remote-Regel** | Stelle in [Region] oder Pendelregion (bis ca. [x] h Fahrt): höchstens [x] Präsenztage pro Woche. Außerhalb der Pendelregion: [100 %] remote Pflicht. Maßstab ist die Präsenzpflicht im Büro, nicht Reisetätigkeit. |
+| M1 | **Arbeitsort / Remote-Regel** | **Pendelregion** = [Stadt] und Umland bis ca. [1 h] einfache Fahrt (einzige Definition, gilt überall). In der Pendelregion: höchstens [x] Präsenztage pro Woche; im **Nahbereich** (ca. [Nahbereich 40 Min.]) sind mehr Präsenztage ein Einzelfall für den Menschen. Außerhalb der Pendelregion: [100 %] remote Pflicht. Maßstab ist die Präsenzpflicht im Büro, nicht Reisetätigkeit. |
 | M1a | **Reise-Regel** | Projektbezogene, befristete Reisen zu Kunden verletzen M1 nicht. Dauerhafte Anwesenheit an einem festen Zweitstandort schon. |
 | M2 | **KI-Einsatz möglich** | Die Rolle erlaubt oder fördert den Einsatz von KI-Werkzeugen. |
 | M3 | **Kulturelle Passung** | [Werte, die der Arbeitgeber teilen muss] |
-| M4 | **Gehalt ≥ [Untergrenze] € brutto/Jahr** | Nicht verhandelbar. |
+| M4 | **Gehalt ≥ [Untergrenze] € brutto/Jahr** | Nicht verhandelbar. Ohne Angabe wird nach fester Quellenreihenfolge geschätzt (siehe `prompts/evaluate-job.md`). |
 
-## 2. Soll-Kriterien
+## 2. Soll-Kriterien (Pluspunkte)
 
-> Mindestens [4 von 7] sollten erfüllt sein.
+> Pluspunkte für Ranking und Anschreiben, **kein Ampelkriterium**. Unbekannt
+> zählt nicht. Rollentyp und Priorität stehen nur in `roles.md`.
 
 | # | Kriterium |
 |---|---|
-| S1 | Rollentyp 1: [z. B. KI-Manager] |
-| S2 | Rollentyp 2: [z. B. Projektmanagement Digitalisierung] |
-| S3 | Rollentyp 3: [z. B. interne Beratung] |
-| S4 | Branche: [bevorzugte Branchen] |
-| S5 | Weiterbildung strukturell möglich |
-| S6 | Gehalt im Zielkorridor bis [Obergrenze] € |
-| S7 | Unbefristeter Vertrag |
+| S1 | Zielrolle mit Priorität 1–3 laut `roles.md` |
+| S2 | Branche: [bevorzugte Branchen] |
+| S3 | Weiterbildung strukturell möglich |
+| S4 | Gehalt erreicht das Zielgehalt von [Obergrenze] |
+| S5 | Unbefristeter Vertrag |
 
 ## 3. Nice-to-have
 
@@ -44,10 +43,9 @@
 - Gehalt nachweislich unter M4
 - [Rollenzuschnitte, die ausgeschlossen sind, z. B. Aufbauaufgabe plus volle Umsatzverantwortung]
 
-## 5. Gewichtung
+## 5. Anwendung
 
-```
-Muss-Kriterien   100 %  K.O. bei Nicht-Erfüllung
-Soll-Kriterien    70 %  mindestens [4/7]
-Nice-to-have      40 %  Bonus, kein Ausschluss
-```
+Muss-Kriterien und Negativliste entscheiden (K.O. oder offen). Soll und
+Nice-to-have sind Pluspunkte für das Ranking vergleichbarer Stellen. **Wie
+bewertet wird (Reihenfolge, Ampel, Gehaltsschätzung, Empfehlung), steht nur in
+`prompts/evaluate-job.md`**, nicht hier.

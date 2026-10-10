@@ -43,9 +43,10 @@ Drei Regeln halten das System sauber:
 > **Beispiel: der Output-Vertrag der Stellenbewertung**
 >
 > - **Datei:** `evaluation-output/2026-09-22_beispielfirma_ai-consultant_eval.md`
-> - **Länge:** höchstens 300 Wörter
-> - **Inhalt:** Ampel mit einem Satz Begründung, je eine Zeile pro Muss-Kriterium, erfüllte Soll-Kriterien, ATS-Keywords aus der Anzeige, offene Fragen
-> - **Danach:** Bei Gelb wandert die Stelle mit Wiedervorlagedatum auf die Watchlist, und die Statusdatei wird nachgezogen.
+> - **Kopf:** maschinenlesbare Felder: Ampel, Empfehlung, je ein Status pro Muss-Kriterium, Gehaltsschätzung mit Quelle, tragende Annahme
+> - **Länge:** höchstens 350 Wörter Begründung
+> - **Inhalt:** Ampel mit einem Satz Begründung, je eine Zeile pro Muss-Kriterium, Rollen-Match, ATS-Keywords aus der Anzeige, offene Fragen
+> - **Danach:** Bei Gelb wandert die Stelle mit Empfehlung und Wiedervorlagedatum auf die Watchlist. Ein Skript baut daraus die Übersicht neu.
 >
 > Wie ein Pflichtenheft, nur für die Ausgabe der KI. Der nächste Schritt kann sich darauf verlassen: Die Keywords aus dieser Datei sind der Input für den Faktencheck der Unterlagen.
 
@@ -55,7 +56,9 @@ Das Framework ist herstellerunabhängig. Es funktioniert mit Claude Code, lässt
 
 Meine ersten Prompts waren Ablaufpläne: Schritt 1, Schritt 2, Phase 3, mit festen Schwellenwerten. Sie wurden lang, widersprachen sich und brachen, sobald eine Stellenanzeige nicht ins Schema passte.
 
-Heute beschreibt jeder Prompt nur noch drei Dinge: das Ziel, die harten Regeln und den Output-Vertrag. Wie das Modell dorthin kommt, entscheidet es selbst. Die Prompts sind dadurch 300 bis 500 Wörter kurz. Ein kleineres Modell führt sie zuverlässig aus. Ein größeres nutze ich, um sie weiterzuentwickeln.
+Heute beschreibt jeder Prompt nur noch drei Dinge: das Ziel, die harten Regeln und den Output-Vertrag. Wie das Modell dorthin kommt, entscheidet es selbst. Ein kleineres Modell führt sie zuverlässig aus. Ein größeres nutze ich, um sie weiterzuentwickeln.
+
+Das muss man pflegen. Im Oktober waren zwei Prompts durch Klarstellungen und Portal-Technik auf über 1.400 Wörter gewachsen. Ich habe sie halbiert: Formate und Technik stehen jetzt in eigenen Dateien, im Prompt bleiben Ziel, Regeln und Vertrag. Heute liegen die Prompts zwischen 250 und 750 Wörtern.
 
 ---
 
@@ -67,21 +70,23 @@ Die Jobsuche ist ein guter Testfall: viele Daten, harte Kriterien, echte Konsequ
 flowchart LR
     A[Job-Scan<br/>Portale, Alerts] --> B[Stellenbewertung<br/>Ampel]
     B -->|rot| X[verwerfen,<br/>Bewertung bleibt]
-    B -->|gelb| W[Watchlist<br/>Klärungsmail]
-    W -->|Antwort| B
-    B -->|grün| C[Arbeitgeber-Prüfung<br/>7 Dimensionen]
+    B -->|gelb| W[Watchlist<br/>Empfehlung, Wiedervorlage]
+    W -->|bewerben| C
+    B -->|grün| C[Arbeitgeber-Prüfung<br/>voll oder Kurzcheck]
     C -->|K.O.| X
     C -->|bestanden| D[Faktencheck<br/>Unterlagen gegen Anzeige]
     D --> E{Mensch schreibt,<br/>entscheidet, versendet}
+    E --> M[(Messdaten:<br/>Absagen, Gespräche)]
+    M -.Regel ändern erst<br/>ab Schwelle.-> B
 ```
 
 ### Die Bausteine
 
 **Job-Scan.** Durchsucht Portale und E-Mail-Alerts nach definierten Suchbegriffen und legt jede Stelle als Volltext-Datei an. Volltext, weil die späteren Schritte die genauen Formulierungen der Anzeige brauchen.
 
-**Stellenbewertung.** Prüft zuerst die Muss-Kriterien. Ein Verstoß beendet die Bewertung. Unklare Punkte werden nicht geraten, sondern als konkrete Frage für eine Klärungsmail notiert. Das Ergebnis ist eine Ampel mit höchstens 300 Wörtern Begründung und eine Liste der ATS-Keywords, die später in den Lebenslauf einfließen. Prompt: [`beispiele/prompts/evaluate-job.md`](beispiele/prompts/evaluate-job.md).
+**Stellenbewertung.** Prüft zuerst die Muss-Kriterien. Ein Verstoß beendet die Bewertung. Unklare Punkte werden nicht geraten, sondern als konkrete Frage notiert, die im Anschreiben gestellt wird. Das Gehalt wird nie offen gelassen: Fehlt es in der Anzeige, schätzt das System es mit Quelle, zuerst aus Tarif, dann aus der amtlichen Entgeltstatistik. Das Ergebnis ist eine Ampel mit höchstens 350 Wörtern Begründung und eine Liste der ATS-Keywords, die später in den Lebenslauf einfließen. Prompt: [`beispiele/prompts/evaluate-job.md`](beispiele/prompts/evaluate-job.md).
 
-**Arbeitgeber-Prüfung.** Pflicht vor jeder Bewerbung. Sieben Dimensionen von Eigentümerstruktur über Finanzen bis Kultur, mit festen Pflichtquellen (Bewertungsportale, Handelsregister, Jahresabschlüsse) und einer aktiven Suche nach Gegenbelegen. Zwei Dateien entstehen: ungekürzte Rohdaten als Beweisgrundlage und ein Bericht, der sich vollständig darauf zurückführen lässt. Prompt: [`beispiele/prompts/employer-check.md`](beispiele/prompts/employer-check.md).
+**Arbeitgeber-Prüfung.** Pflicht vor jeder Bewerbung. Bei großen Konzernen ohne Krisensignal reicht ein Kurzcheck: Bewertungsportale, Präsenz-Realität, Gehaltsniveau, KI-Reife und eine Presse-Suche. Sonst sieben Dimensionen von Eigentümerstruktur über Finanzen bis Kultur, mit festen Pflichtquellen (Bewertungsportale, Handelsregister, Jahresabschlüsse) und einer aktiven Suche nach Gegenbelegen. Zwei Dateien entstehen: ungekürzte Rohdaten als Beweisgrundlage und ein Bericht, der sich vollständig darauf zurückführen lässt. Prompt: [`beispiele/prompts/employer-check.md`](beispiele/prompts/employer-check.md).
 
 **Recherche und Analyse.** Zwei getrennte Agenten, bewusst. Der Recherche-Agent sammelt Fakten und interpretiert nichts. Der Analyse-Agent zieht Schlüsse, bildet konkurrierende Hypothesen und greift die eigene Hauptaussage im Red Teaming an. Die Trennung verhindert, dass eine Vermutung unterwegs zur Tatsache wird. Prompts: [`recherche.md`](beispiele/prompts/recherche.md), [`analyse.md`](beispiele/prompts/analyse.md).
 
@@ -137,17 +142,18 @@ Der Ablauf dahinter: lernen, validieren, freigeben. Erst verstehen, was da ist. 
 
 ## 5. Ergebnis
 
-Stand Oktober 2026, nach gut drei Monaten Betrieb:
+Stand 10. Oktober 2026, nach gut drei Monaten Betrieb:
 
-- **146** Stellen erfasst, **144** bewertet
-- **33** davon über die K.O.-Kriterien aussortiert, bevor Zeit hineinfloss
-- **46** auf der Watchlist mit Empfehlung und Wiedervorlagedatum
-- **31** Arbeitgeber-Prüfungen mit Rohdaten und Bericht
-- **22** Bewerbungen, jede mit eigenem Lebenslauf, eigenem Anschreiben und dokumentierten Portal-Antworten
+- **176** Stellenbewertungen
+- **41** Stellen auf der Watchlist mit Empfehlung und Wiedervorlagedatum
+- **40** Arbeitgeber-Prüfungen mit Rohdaten und Bericht
+- **27** Bewerbungen, jede mit eigenem Lebenslauf, eigenem Anschreiben und dokumentierten Portal-Antworten
 
 Drei Beispiele, wo die Struktur den Unterschied gemacht hat:
 
 **Die Klärungsmail als Filter.** Unklare Stellen bekommen eine kurze Mail mit zwei Fragen, meist Präsenztage und Gehaltsspanne. Von den an einem Abend versandten Mails kamen binnen 24 Stunden drei inhaltliche Antworten. Eine davon machte klar: 100 % Präsenz an einem Ort weit außerhalb meiner Region. Stelle aussortiert, ohne dass ein Lebenslauf geschrieben wurde.
+
+Die Kehrseite habe ich erst später gezählt: Von sechs Rückfragen über ein Karrierenetzwerk wurde keine beantwortet, und jede Klärungsrunde kostete ein bis zwei Wochen. In dieser Zeit sammeln gute Anzeigen ihre ersten hundert Bewerbungen. Heute ist die Bewerbung mit den offenen Fragen im Anschreiben der Standard. Die Klärungsmail bleibt für den Fall, dass ein Nein sicher ein Ausschluss wäre.
 
 **Die Lücke, die keine war.** Beim Abgleich mit einer Anzeige standen zwei Automatisierungswerkzeuge zunächst als „nicht belegt“. Mir fiel auf, dass ich eines davon in einem echten Projekt eingesetzt hatte, es aber nie dokumentiert war. Weil jede Aussage auf die Master-Datei zurückgeht, wurde der Beleg dort nachgetragen und floss danach in alle weiteren Bewerbungen, sauber als Projekterfahrung und nicht als Dauerpraxis.
 
@@ -157,14 +163,14 @@ Drei Beispiele, wo die Struktur den Unterschied gemacht hat:
 
 ## 6. Funktioniert es? Gemessen, nicht behauptet
 
-Eine Demo zeigt, dass ein System läuft. Ob es richtig liegt, zeigt sie nicht. Deshalb hier die Zahlen, auch die unbequemen. Stand 7. Oktober 2026, 144 Stellenbewertungen seit Juli.
+Eine Demo zeigt, dass ein System läuft. Ob es richtig liegt, zeigt sie nicht. Deshalb hier die Zahlen, auch die unbequemen. Stand 10. Oktober 2026, 174 Stellenbewertungen mit Ampel seit Juli.
 
 ### Die Ampel sagt meistens: unklar
 
 | Ampel | Anzahl | Anteil |
 |---|---|---|
-| Gelb | 108 | 75 % |
-| Rot | 33 | 23 % |
+| Gelb | 122 | 70 % |
+| Rot | 50 | 29 % |
 | Grün | 2 | 1 % |
 
 Sieht nach einem schwachen Modell aus. Es ist eine Entscheidung.
@@ -173,7 +179,13 @@ Meine wichtigsten Muss-Kriterien sind Präsenztage und Gehalt. Beides steht in k
 
 **Die Abwägung:** Eine Klärungsmail zu viel kostet zehn Minuten. Eine verpasste passende Stelle kostet mehr. Also ist Gelb bewusst großzügig.
 
-**Der Preis:** Gelb ist kein Filter mehr, sondern eine Arbeitsliste. Deshalb trägt jede gelbe Stelle eine Empfehlung und ein Wiedervorlagedatum. Von 46 Stellen auf der Watchlist: 3 bewerben, 21 beobachten, 8 geparkt, 14 entscheide ich.
+**Der Preis:** Gelb ist kein Filter mehr, sondern eine Arbeitsliste. Deshalb trägt jede gelbe Stelle eine Empfehlung und ein Wiedervorlagedatum. Von 41 Stellen auf der Watchlist: 20 entscheide ich, 11 geparkt, 8 beobachten, 1 bewerben, 1 pausiert. Stellen, bei denen feststeht, dass ich mich nicht bewerbe, schließe ich inzwischen, statt sie weiter zu beobachten.
+
+### Unbekannt heißt nicht unbelegbar
+
+Gelb wegen fehlender Gehaltsangabe war richtig, solange es keine belastbare Quelle gab. Dann habe ich die amtliche Entgeltstatistik eingebunden: mittlere Bruttogehälter je Beruf und Region aus den Meldungen zur Sozialversicherung, abrufbar über eine öffentliche Schnittstelle. Für meine Zielberufe lag sie um rund ein Viertel über dem, was ein großes Gehaltsportal zeigte.
+
+Zwei Folgen. Grün ist wieder erreichbar, sobald die Statistik die Untergrenze trägt. Die Bewertung nennt dann Zahl und Quelle und sagt ausdrücklich „geschätzt“. Und meine Gehaltsangabe in Bewerbungen beruht jetzt auf Daten statt auf Gefühl.
 
 ### Wenn ich die Empfehlung überstimme
 
@@ -212,8 +224,8 @@ Einladungen und Absagen messen nicht das System. Ob eine Firma einlädt, hängt 
 
 ### Was ich vor dem Einsatz in einem Team ändern würde
 
-- **Festes Testset.** 30 bereits entschiedene Stellen als Referenz, nach jeder Regeländerung neu bewerten, Abweichungen zählen. Heute prüfe ich Regeländerungen nur an neuen Fällen.
-- **Nenner ab Tag eins.** Die Zahlen oben habe ich aus den Laufprotokollen von Hand ausgezählt. Seit Oktober schreibt jeder Lauf eine feste Zählzeile in eine Logdatei. Im Team gehört das von Anfang an dazu.
+- **Größeres Testset.** Seit Oktober gibt es einen Regressionstest: eingefrorene, bereits entschiedene Stellen, die nach jeder Regeländerung neu bewertet werden. Er hat schon mehrfach gegriffen, etwa als eine Regel „nur wenn“ als „dann“ gelesen wurde. Vier Fälle sind zu wenig; im Team wären es 30.
+- **Nenner ab Tag eins.** Die frühen Zahlen habe ich von Hand ausgezählt. Heute schreibt jeder Scan eine Zählzeile (gesichtet, angelegt, verworfen nach Grund und Quelle), jede Bewerbung ein Merkmalsprofil, und jede Hypothese hat Messgröße und Schwelle, bevor gezählt wird. Im Team gehört das von Anfang an dazu.
 - **Kosten pro Lauf.** Messe ich bisher nicht. Für ein Team mit 50 Leuten ist das die erste Frage der Geschäftsführung.
 - **Datenschutz.** Postfachinhalte laufen über einen externen Dienst. Im Unternehmen heißt das: Auftragsverarbeitungsvertrag, Datenklassen festlegen, und manche Postfächer bleiben draußen.
 
@@ -226,6 +238,10 @@ Einladungen und Absagen messen nicht das System. Ob eine Firma einlädt, hängt 
 **Unsicherheit muss einen Namen haben.** Ein Modell, das „weiß ich nicht“ sagen darf, sagt es auch. Die Konfidenz-Labels und die Kategorie „manuell prüfen“ sind keine Bürokratie, sondern das, was die Ergebnisse vertrauenswürdig macht.
 
 **Die Grenze zwischen KI und Mensch gehört ins Design.** Wo entscheidet der Mensch? Diese Frage beantworte ich, bevor ich einen Workflow baue, nicht danach. Die Antwort ist fast immer dieselbe: bei allem, was nach außen geht oder sich nicht zurückholen lässt.
+
+**Übersichten erzeugen, nicht pflegen.** Dieselbe Liste an zwei Orten driftet, auch bei mir: Eine Stelle stand in der Statusübersicht unter der falschen Empfehlung. Heute baut ein kleines Skript Watchlist, Zähler und Statistik aus den Dateien. Von Hand bleibt nur, was ein Urteil braucht.
+
+**Erst die Schwelle, dann zählen.** Nach einer Reihe von Absagen ist die Versuchung groß, an allem gleichzeitig zu drehen. Jede Vermutung bekommt deshalb vorher eine Messgröße und eine Schwelle. Darunter ist es Rauschen. Jede Bewertung nennt außerdem die Annahme, auf der sie steht, damit eine Absage zeigt, welche Annahme nicht hielt.
 
 **Dateien sind die beste Schnittstelle.** Was als Datei vorliegt, lässt sich prüfen, versionieren und von einem anderen Werkzeug weiterverwenden. Was nur im Chat steht, ist morgen weg.
 

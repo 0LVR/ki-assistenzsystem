@@ -4,88 +4,80 @@ Aufruf: `/evaluate-job jobs/YYYY-MM-DD_[firma]_[titel].md`
 
 ## Ziel
 
-Ampel (🟢 bewerben / 🟡 merken / 🔴 ablehnen) mit knapper Begründung als
-Datei. Danach die Ablage nachziehen.
+Ampel und Empfehlung mit knapper Begründung als Datei, dazu die ATS-Keywords
+für das CV-Tailoring. Danach die Ablage nachziehen. Die Entscheidung über
+Bewerbung und Versand trifft [Mensch].
 
 ## Lies vorher
 
-- `criteria.md` — Muss, Soll, Nice-to-have, Negativliste, Gewichtung
-- `roles.md` — Zielrollen mit Priorität, Stärken, Lücken, Filterregeln
-- die Stellenanzeige aus dem Aufruf
+`criteria.md` (Muss, Pendelregion, Negativliste, Soll), `roles.md` (Zielrollen,
+Priorität, Lücken, Artefakt-Bedingungen), die Master-Datei mit Belegen (was ist
+nachweisbar), `formate.md` (Stellendatei, Frontmatter), die Stellenanzeige.
 
 ## Regeln
 
-1. Muss-Kriterien M1–M4 zuerst. Ein ❌ → 🔴, der Rest entfällt. Standort- und
-   Reiselogik stehen in criteria.md, nicht hier.
-2. ⚠️ (unklar) bei M1, M2 oder M3 → höchstens 🟡, die Klärungsfrage wird zur
-   offenen Frage. Fehlende Gehaltsangabe (M4 ⚠️) → 🟡. Vorher schätzen, wo
-   es belegbar ist: Tarifangabe in der Anzeige (TVöD, TV-L, BG-AT, Chemie,
-   IG Metall, TV-V …) → Tariftabelle nachschlagen und Jahresbrutto
-   beziffern; sonst Entgeltatlas der Arbeitsagentur (Beruf + Region) als
-   Median. Tarifwert ≥ Gehaltsuntergrenze aus criteria.md → M4 ✅ mit Quelle; Schätzung ohne Tarif bleibt ⚠️,
-   aber mit Zahl.
-3. Negativliste aus criteria.md: ein Treffer → 🔴.
-4. Soll-Kriterien zählen (x/7). Rollen-Match: welche Rolle, hoch/mittel/niedrig,
-   Seniorität realistisch? Welche Lücken aus roles.md fordert die Anzeige explizit?
-5. ATS-Keywords: 5–10 Pflicht- und bis zu 5 Bonus-Keywords aus dem Anzeigentext,
-   je mit ✅/⚠️/❌ gegen das Profil. Diese Liste ist Pflichtinput für
-   den Faktencheck der Unterlagen.
-6. Ampel nach Urteil, nicht nach Formel. 🟢 nur, wenn alle M ✅, Soll ≥ 4/7 und
-   Rollen-Match mindestens mittel. Die Keyword-Quote zeigt den CV-Aufwand an,
-   sie ist kein Ampelkriterium.
-7. Nicht raten. Was die Anzeige nicht hergibt, ist ⚠️ mit einer konkreten Frage
-   für die Klärungsmail (Vorlage „Klärungsmail“ im Bewerbungsmodul).
+1. **Liveness zuerst.** Anzeige offline → nicht bewerten, Datei zu den
+   vergebenen Stellen. Ältere Eval derselben Firma und Rolle = Neuausschreibung:
+   alte Eval verlinken, nur Änderungen bewerten.
+2. **Muss M1–M4 zuerst.** Ein ❌ → 🔴. ⚠️ bei M1–M3 → höchstens 🟡, die
+   Klärungsfrage wird offene Frage. Pendelregion-Definition nur in `criteria.md`.
+3. **M4 immer mit Zahl und Quelle.** Erste belastbare Quelle zählt:
+   Anzeige → Tarif → Entgeltatlas → Gehaltsreport → Firmenwerte. Nie Bänder aus
+   `roles.md`. Anzeige oder Tarif ≥ [Untergrenze] → ✅; eindeutig darunter → ❌.
+   Sonst Entgeltatlas-Median ≥ [Untergrenze] → „✅ geschätzt“, darunter ⚠️ mit Zahl.
+4. **K.O. auch bei** Negativlisten-Treffer und geforderter Personalverantwortung,
+   wenn `roles.md` sie ausschließt.
+5. **Rolle und Match** laut `roles.md`. Soll-Kriterien sind Pluspunkte
+   (unbekannt zählt nicht), kein Ampelkriterium.
+6. **Harte Pflichtlücke** = als Muss formuliert und in der Master-Datei nicht
+   belegt. „Oder vergleichbar“ macht eine Anforderung weich.
+7. **Ampel nach Urteil:**
+   - 🟢 = M1–M3 ✅, M4 ✅ (auch geschätzt), keine Negativliste, Match ≥ mittel,
+     keine harte Pflichtlücke.
+   - 🟡 = kein K.O., aber etwas offen.
+   - 🔴 = K.O. oder falsches Berufsbild oder aussichtslose Kernanforderung.
+     Schließt ein geplantes Artefakt die Lücke → 🟡 „geparkt“.
+8. **Empfehlung** (außer 🔴): 🟢 → bewerben. 🟡 → bewerben · [Mensch]-Entscheid ·
+   geparkt (mit Bedingung) · beobachten.
+9. **Tragende Annahme:** ein Satz, welche Annahme das Urteil trägt und am
+   ehesten kippt. Pflichtfeld, später gegen den Ausgang geprüft.
+10. **ATS-Keywords:** 5–10 Pflicht, bis 5 Bonus, je ✅/⚠️/❌ gegen die
+    Master-Datei.
+11. **Nicht raten.** Unklares ist ⚠️ mit konkreter Frage. Offene Fragen gehen
+    standardmäßig ins Anschreiben; eine Klärungsmail ist die Ausnahme.
 
 ## Output
 
-`evaluation-output/YYYY-MM-DD_[firma-slug]_[titel-slug]_eval.md`,
-**höchstens 300 Wörter**:
+`evaluation-output/YYYY-MM-DD_[firma-slug]_[titel-slug]_eval.md`: Frontmatter,
+darunter höchstens 350 Wörter: Ampel + Empfehlung + ein Satz · M1–M4 je eine
+Zeile (M4 mit Zahl und Quelle) · Negativliste · Rolle, Match, Soll-Pluspunkte,
+Lücken · ATS-Keywords · offene Fragen (🟡) · nächster Schritt. Bei 🔴 durch
+K.O.: Frontmatter und Kopf.
 
-- Ampel + ein Satz Begründung
-- M1–M4 je eine Zeile: ✅/⚠️/❌ + Grund
-- Negativliste: Treffer ja/nein
-- Soll x/7, Rollen-Match, geforderte Lücken
-- ATS-Keywords als Liste oder Tabelle
-- Offene Fragen (nur bei 🟡)
-- Nächster Schritt
-
-Bei 🔴 durch K.O. reicht der Kopf: Ampel, verletztes Kriterium, ein Satz.
+```yaml
+---
+ampel: 🟢 | 🟡 | 🔴
+empfehlung: bewerben | [Mensch]-entscheid | geparkt | beobachten | —
+m1: ✅ | ⚠️ | ❌
+m2: ✅ | ⚠️ | ❌
+m3: ✅ | ⚠️ | ❌
+m4: ✅ | ✅ geschätzt | ⚠️ | ❌
+m4-zahl: "[Kennzahl + Quelle]"
+rolle: [Zielrolle] | —
+match: hoch | mittel | niedrig
+harte-luecke: [kurz] | keine
+soll: [x/Anzahl]
+tragende-annahme: "[ein Satz]"
+bewertet: YYYY-MM-DD
+---
+```
 
 ## Danach
 
-- 🟢 → `/employer-check [Firma]` ist Pflicht vor der Übergabe an job-application.
-- 🟡 → Datei nach `jobs/watchlist/` **verschieben** (nicht kopieren) und
-  Frontmatter voranstellen:
-  ```
-  ---
-  status: watchlist
-  bewertet: YYYY-MM-DD
-  wiedervorlage: YYYY-MM-DD        (+14 Tage)
-  offene-frage: [konkrete Frage]
-  eval: evaluation-output/[dateiname]_eval.md
-  ---
-  ```
-- 🔴 → Datei aus `jobs/` löschen, der Eval-Report bleibt als Beleg.
-- Immer: `status.md` (Historie-Tabelle, Funnel-Zähler, bei 🟡 Watchlist-Abschnitt).
+- 🟢 → `/employer-check` ist Pflicht vor der Übergabe an die Bewerbung.
+- 🟡 → Datei nach `jobs/watchlist/` verschieben, Wiedervorlage-Datum setzen.
+- 🔴 → Stellendatei löschen, die Eval bleibt als Beleg.
+- Immer: Status-Datei und Funnel-Zähler nachziehen.
 
-Optional bei starken 🟢-Kandidaten: `/analyse` auf den Eval-Report (Werte-Fit,
-implizite Risiken, Verhandlungsposition, Red Teaming) →
-`evaluation-output/..._tiefenanalyse.md`.
-
-## Input-Format für Stellen in `jobs/`
-
-Volltext, nicht zusammenfassen (ATS-Keywords). Dateiname
-`YYYY-MM-DD_[firma-slug]_[titel-slug].md`, Kleinschreibung, Datum = Funddatum.
-
-```markdown
-# [Jobtitel]
-
-## Meta
-- Unternehmen: / Standort: / Vertragsart: / Gehalt: („keine Angabe" erlaubt)
-- Quelle: / Gefunden am: / URL:
-
-## Aufgaben
-## Anforderungen
-## Über das Unternehmen
-## Sonstiges
-```
+Optional: ein kleiner Regressionstest mit festen Beispielstellen prüft, ob
+Prompt-Änderungen die Ampeln verschieben.
