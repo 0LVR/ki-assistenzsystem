@@ -7,7 +7,7 @@
 ## Was dieses Repo ist
 
 Ein persönliches Assistenzsystem aus Prompts, Datendateien und Arbeitsergebnissen
-für [Anwendungsbereiche, z. B. Jobsuche und Postfach]. Kein Code.
+für [Anwendungsbereiche, z. B. Jobsuche und Postfach]. Kaum Code, nur kleine Hilfsskripte.
 
 ## Ton
 
@@ -37,7 +37,7 @@ neue Regel kommt in die eine Datei, der sie gehört, nie in drei.
 
 - `job-research/` — Stellen finden, bewerten, Arbeitgeber prüfen. Regeln:
   `job-research/CLAUDE.md`
-- `job-application/` — Faktencheck der Unterlagen, Tracker, Wiedervorlagen. Regeln:
+- `job-application/` — Entwurf und Faktencheck der Unterlagen, Tracker, Wiedervorlagen. Regeln:
   `job-application/CLAUDE.md`
 - `[weiteres-modul]/` — [Zweck]
 
@@ -45,5 +45,5 @@ neue Regel kommt in die eine Datei, der sie gehört, nie in drei.
 
 - Sprache der Ausgaben: Deutsch, außer die Aufgabe verlangt anderes.
 - Sagt ein Prompt „speichern unter [Pfad]“, wird gespeichert, nicht nur angezeigt.
-- Alle Prompts sind als Slash-Commands registriert (`.claude/commands/`).
+- Jeder aktive Prompt ist als Slash-Command registriert (`.claude/commands/`).
 - Nach außen geht nichts ohne Freigabe: keine Mails, keine Uploads, keine Käufe.
